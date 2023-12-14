@@ -1,12 +1,12 @@
 const calendar = document.querySelector(".calendar"),
-  date = document.querySelector("data"),
+  date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
   prev = document.querySelector(".prev"),
   next = document.querySelector(".next");
 
 let today = new Date();
 let activeDay;
-let month = today.getFullMonth();
+let month = today.getMonth();
 let year = today.getFullYear();
 
 const months = [
@@ -26,14 +26,42 @@ const months = [
 
 // function to add days
 function initCalendar() {
-    // to 
+  // to get prev month and current month all days and rem next month days
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const prevLastDay = new Date(year, month, 0);
-  const prevDay = prevLastDay.getDate();
-  const ladtDate = lastDay.getDate();
+  const prevDays = prevLastDay.getDate();
+  const lastDate = lastDay.getDate();
   const day = firstDay.getDate();
   const nextDays = 7 - lastDay.getDay() - 1;
 
-  date.innerHTML = `${month[month]} ${year}`;
+  // updata date top of calendar
+  date.innerHTML = `${months[month]} ${year}`;
+
+  // adding days on dom
+
+  let days = "";
+
+  // prev month days
+
+  for (let x = day; x > 0; x--) {
+    days += `<div class='day prev-date'>${prevDays - x + 1}</div>`;
+  }
+
+  // current month days
+
+  for (let i = 1; i < lastDate; i++) {
+    // if day is today add class today
+    if (
+      i === new Date().getDate() &&
+      year === new Date().getFullYear() &&
+      month === new Date().getMonth()
+    ) {
+      days += `<div class='day today'>${i}</div>`;
+    }
+  }
+
+  daysContainer.innerHTML = days;
 }
+
+initCalendar();
