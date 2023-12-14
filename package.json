@@ -1,0 +1,16 @@
+{
+  "name": "modern-calendar-with-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "hrml",
+    "css",
+    "javascript"
+  ],
+  "author": "Abdulloh Mirzayev",
+  "license": "ISC"
+}
