@@ -87,3 +87,13 @@ function prevMonth() {
   initCalendar();
 }
 
+// next month
+
+function nextMonth() {
+  month++;
+  if (month > 11) {
+    month = 0;
+    year++;
+  }
+  initCalendar();
+}
