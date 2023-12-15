@@ -5,7 +5,17 @@ const calendar = document.querySelector(".calendar"),
   next = document.querySelector(".next"),
   todayBtn = document.querySelector(".today-btn"),
   gotoBtn = document.querySelector(".goto-btn"),
-  dateInput = document.querySelector(".date-input");
+  dateInput = document.querySelector(".date-input"),
+  eventDay = document.querySelector(".event-day"),
+  eventDate = document.querySelector(".event-date"),
+  eventsContainer = document.querySelector(".events"),
+  addEventBtn = document.querySelector(".add-event"),
+  addEventWrapper = document.querySelector(".add-event-wrapper "),
+  addEventCloseBtn = document.querySelector(".close "),
+  addEventTitle = document.querySelector(".event-name "),
+  addEventFrom = document.querySelector(".event-time-from "),
+  addEventTo = document.querySelector(".event-time-to "),
+  addEventSubmit = document.querySelector(".add-event-btn ");
 
 let today = new Date();
 let activeDay;
@@ -27,9 +37,12 @@ const months = [
   "December",
 ];
 
-// function to add days
+const eventsArr = [];
+getEvents();
+console.log(eventsArr);
+
+//function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
 function initCalendar() {
-  // to get prev month and current month all days and rem next month days
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const prevLastDay = new Date(year, month, 0);
@@ -38,59 +51,64 @@ function initCalendar() {
   const day = firstDay.getDay();
   const nextDays = 7 - lastDay.getDay() - 1;
 
-  // updata date top of calendar
-  date.innerHTML = `${months[month]} ${year}`;
-
-  // adding days on dom
+  date.innerHTML = months[month] + " " + year;
 
   let days = "";
 
-  // prev month days
-
   for (let x = day; x > 0; x--) {
-    days += `<div class='day prev-date'>${prevDays - x + 1}</div>`;
+    days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
   }
 
-  // current month days
-
   for (let i = 1; i <= lastDate; i++) {
-    // if day is today add class today
+    //check if event is present on that day
+    let event = false;
+    eventsArr.forEach((eventObj) => {
+      if (
+        eventObj.day === i &&
+        eventObj.month === month + 1 &&
+        eventObj.year === year
+      ) {
+        event = true;
+      }
+    });
     if (
       i === new Date().getDate() &&
       year === new Date().getFullYear() &&
       month === new Date().getMonth()
     ) {
-      days += `<div class='day today'>${i}</div>`;
-    }
-    // add remaing as it is
-    else {
-      days += `<div class='day'>${i}</div>`;
+      activeDay = i;
+      getActiveDay(i);
+      updateEvents(i);
+      if (event) {
+        days += `<div class="day today active event">${i}</div>`;
+      } else {
+        days += `<div class="day today active">${i}</div>`;
+      }
+    } else {
+      if (event) {
+        days += `<div class="day event">${i}</div>`;
+      } else {
+        days += `<div class="day ">${i}</div>`;
+      }
     }
   }
-
-  // next month days
 
   for (let j = 1; j <= nextDays; j++) {
-    days += `<div class='day next-date'>${j}</div>`;
+    days += `<div class="day next-date">${j}</div>`;
   }
-
   daysContainer.innerHTML = days;
+  addListner();
 }
 
-initCalendar();
-
-// prev month
-
+//function to add month and year on prev and next button
 function prevMonth() {
   month--;
   if (month < 0) {
-    month < 11;
+    month = 11;
     year--;
   }
   initCalendar();
 }
-
-// next month
 
 function nextMonth() {
   month++;
@@ -101,12 +119,59 @@ function nextMonth() {
   initCalendar();
 }
 
-// add eventlistnner on prev and next
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
 
-// our calendar is ready
-// lets add goto date and goto today functionality
+initCalendar();
+
+//function to add active on day
+function addListner() {
+  const days = document.querySelectorAll(".day");
+  days.forEach((day) => {
+    day.addEventListener("click", (e) => {
+      getActiveDay(e.target.innerHTML);
+      updateEvents(Number(e.target.innerHTML));
+      activeDay = Number(e.target.innerHTML);
+      //remove active
+      days.forEach((day) => {
+        day.classList.remove("active");
+      });
+      //if clicked prev-date or next-date switch to that month
+      if (e.target.classList.contains("prev-date")) {
+        prevMonth();
+        //add active to clicked day afte month is change
+        setTimeout(() => {
+          //add active where no prev-date or next-date
+          const days = document.querySelectorAll(".day");
+          days.forEach((day) => {
+            if (
+              !day.classList.contains("prev-date") &&
+              day.innerHTML === e.target.innerHTML
+            ) {
+              day.classList.add("active");
+            }
+          });
+        }, 100);
+      } else if (e.target.classList.contains("next-date")) {
+        nextMonth();
+        //add active to clicked day afte month is changed
+        setTimeout(() => {
+          const days = document.querySelectorAll(".day");
+          days.forEach((day) => {
+            if (
+              !day.classList.contains("next-date") &&
+              day.innerHTML === e.target.innerHTML
+            ) {
+              day.classList.add("active");
+            }
+          });
+        }, 100);
+      } else {
+        e.target.classList.add("active");
+      }
+    });
+  });
+}
 
 todayBtn.addEventListener("click", () => {
   today = new Date();
@@ -116,18 +181,13 @@ todayBtn.addEventListener("click", () => {
 });
 
 dateInput.addEventListener("input", (e) => {
-  // allow only number remove anothing else
   dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
   if (dateInput.value.length === 2) {
-    // add a slash if two number entered
     dateInput.value += "/";
   }
   if (dateInput.value.length > 7) {
-    // dom allow more then 7 chatacter
     dateInput.value = dateInput.value.slice(0, 7);
   }
-
-  // if backsace pressed
   if (e.inputType === "deleteContentBackward") {
     if (dateInput.value.length === 3) {
       dateInput.value = dateInput.value.slice(0, 2);
@@ -137,18 +197,16 @@ dateInput.addEventListener("input", (e) => {
 
 gotoBtn.addEventListener("click", gotoDate);
 
-// function to go to entered date
-
 function gotoDate() {
+  console.log("here");
   const dateArr = dateInput.value.split("/");
   if (dateArr.length === 2) {
-    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[i].length === 4) {
-      month == dateArr[0] - 1;
+    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+      month = dateArr[0] - 1;
       year = dateArr[1];
       initCalendar();
       return;
     }
   }
-  // if invalid date
-  alert("invalid date");
+  alert("Invalid Date");
 }
