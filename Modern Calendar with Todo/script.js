@@ -2,7 +2,10 @@ const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
   prev = document.querySelector(".prev"),
-  next = document.querySelector(".next");
+  next = document.querySelector(".next"),
+  todayBtn = document.querySelector(".today-btn"),
+  gotoBtn = document.querySelector(".goto-btn"),
+  dateInput = document.querySelector(".date-input");
 
 let today = new Date();
 let activeDay;
@@ -96,4 +99,56 @@ function nextMonth() {
     year++;
   }
   initCalendar();
+}
+
+// add eventlistnner on prev and next
+prev.addEventListener("click", prevMonth);
+next.addEventListener("click", nextMonth);
+
+// our calendar is ready
+// lets add goto date and goto today functionality
+
+todayBtn.addEventListener("click", () => {
+  today = new Date();
+  month = today.getMonth();
+  year = today.getFullYear();
+  initCalendar();
+});
+
+dateInput.addEventListener("input", (e) => {
+  // allow only number remove anothing else
+  dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+  if (dateInput.value.length === 2) {
+    // add a slash if two number entered
+    dateInput.value += "/";
+  }
+  if (dateInput.value.length > 7) {
+    // dom allow more then 7 chatacter
+    dateInput.value = dateInput.value.slice(0, 7);
+  }
+
+  // if backsace pressed
+  if (e.inputType === "deleteContentBackward") {
+    if (dateInput.value.length === 3) {
+      dateInput.value = dateInput.value.slice(0, 2);
+    }
+  }
+});
+
+gotoBtn.addEventListener("click", gotoDate);
+
+// function to go to entered date
+
+function gotoDate() {
+  const dateArr = dateInput.value.split("/");
+  if (dateArr.length === 2) {
+    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[i].length === 4) {
+      month == dateArr[0] - 1;
+      year = dateArr[1];
+      initCalendar();
+      return;
+    }
+  }
+  // if invalid date
+  alert("invalid date");
 }
