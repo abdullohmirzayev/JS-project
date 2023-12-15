@@ -75,3 +75,15 @@ function initCalendar() {
 }
 
 initCalendar();
+
+// prev month
+
+function prevMonth() {
+  month--;
+  if (month < 0) {
+    month < 11;
+    year--;
+  }
+  initCalendar();
+}
+
