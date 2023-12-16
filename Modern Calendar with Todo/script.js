@@ -152,3 +152,35 @@ function gotoDate() {
   // if invalid date
   alert("invalid date");
 }
+
+const addEventBtn = document.querySelector(".add-event"),
+  addEventContainer = document.querySelector(".add-event-wrapper"),
+  addEventCloseBtn = document.querySelector(".close"),
+  addEventTitle = document.querySelector(".event-name"),
+  addEventFrom = document.querySelector(".event-name-from"),
+  addEventTo = document.querySelector(".event-time-to");
+
+addEventBtn.addEventListener("click", () => {
+  addEventContainer.classList.toggle("active");
+});
+addEventCloseBtn.addEventListener("click", () => {
+  addEventContainer.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  // if click outside
+  if (e.target !== addEventBtn && !addEventCloseBtn.contains(e.target)) {
+    addEventContainer.classList.toggle("active");
+  }
+});
+// allow only 50 chars in title
+addEventTitle.addEventListener("input", (e) => {
+  addEventTitle.value = addEventTitle.value.slice(0, 50);
+});
+
+// time format in from and to time
+
+addEventFrom.addEventListener("input", (e) => {
+  // remove anything else number
+  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
+});
