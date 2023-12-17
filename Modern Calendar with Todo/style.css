@@ -246,6 +246,7 @@ body {
   min-height: 100%;
   padding: 20px 0;
 }
+
 .right .today-date {
   width: 100%;
   height: 50px;
@@ -260,7 +261,11 @@ body {
   margin-bottom: 20px;
   text-transform: capitalize;
 }
-.today-date .event-date {
+.right .today-date .event-day {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.right .today-date .event-date {
   font-size: 1rem;
   font-weight: 400;
   color: #878895;
@@ -273,7 +278,7 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 4px;
+  padding-left: 4px;
 }
 .events .event {
   position: relative;
@@ -286,9 +291,10 @@ body {
   padding: 0 20px;
   padding-left: 50px;
   color: #fff;
-  cursor: pointer;
   background: linear-gradient(90deg, #3f4458, transparent);
+  cursor: pointer;
 }
+/* even event */
 .events .event:nth-child(even) {
   background: transparent;
 }
@@ -305,127 +311,40 @@ body {
   font-weight: 400;
   margin-left: 20px;
 }
-.events .event .title i {
+.events .event i {
   color: var(--primary-clr);
   font-size: 0.5rem;
 }
-.events .event:hover .title i,
-.events .event:hover .event-time {
+.events .event:hover i {
   color: #fff;
 }
-.events .event .title .event-time {
+.events .event .event-time {
   font-size: 0.8rem;
   font-weight: 400;
   color: #878895;
   margin-left: 15px;
   pointer-events: none;
 }
-.even::after {
-  content: "v";
+.events .event:hover .event-time {
+  color: #fff;
+}
+/* add tick in event after */
+.events .event::after {
+  content: "✓";
   position: absolute;
   top: 50%;
   right: 0;
   font-size: 3rem;
-  display: flex;
+  line-height: 1;
+  display: none;
   align-items: center;
   justify-content: center;
   opacity: 0.3;
   color: var(--primary-clr);
   transform: translateY(-50%);
 }
-.even:hover::after {
+.events .event:hover::after {
   display: flex;
-}
-.add-event-wrapper {
-  position: absolute;
-  bottom: 100px;
-  left: 50%;
-  width: 90%;
-  max-height: 0;
-  overflow: hidden;
-  border-radius: 5px;
-  border-color: #fff;
-  transform: translateX(-50%);
-  transition: max-height 0.5;
-}
-.add-event-wrapper.active {
-  max-width: 300px;
-}
-.add-event-header {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  color: #373c4f;
-  border-bottom: 1px solid #f5f5f5;
-}
-.add-event-header .close {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-.add-event-header .close:hover {
-  color: var(--primary-clr);
-}
-.add-event-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 20px;
-}
-.add-event-body .add-event-input {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.add-event-body .add-event-input input {
-  width: 100%;
-  height: 100%;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid #f5f5f5;
-  padding: 0 30px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #373c4f;
-}
-.add-event-body .add-event-input input::placeholder {
-  color: #a5a5a5;
-}
-.add-event-body .add-event-input input:focus {
-  border-color: var(--primary-clr);
-}
-.add-event-body .add-event-input input:focus::placeholder {
-  border-color: var(--primary-clr);
-}
-.add-event-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.add-event-btn {
-  height: 40px;
-  font-size: 1rem;
-  font-weight: 500;
-  outline: none;
-  border: none;
-  color: #fff;
-  background-color: var(--primary-clr);
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border: 1px solid var(--primary-clr);
-}
-.add-event-btn:hover {
-  columns: var(--primary-clr);
-  background-color: transparent;
 }
 .add-event {
   position: absolute;
@@ -449,4 +368,191 @@ body {
 }
 .add-event i {
   pointer-events: none;
+}
+.events .no-event {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #878895;
+}
+.add-event-wrapper {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  width: 90%;
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #fff;
+  transform: translateX(-50%);
+  transition: max-height 0.5s ease;
+}
+.add-event-wrapper.active {
+  max-height: 300px;
+}
+.add-event-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #373c4f;
+  border-bottom: 1px solid #f5f5f5;
+}
+.add-event-header .close {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.add-event-header .close:hover {
+  color: var(--primary-clr);
+}
+.add-event-header .title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.add-event-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+.add-event-body .add-event-input {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.add-event-body .add-event-input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #373c4f;
+}
+.add-event-body .add-event-input input::placeholder {
+  color: #a5a5a5;
+}
+.add-event-body .add-event-input input:focus {
+  border-bottom: 1px solid var(--primary-clr);
+}
+.add-event-body .add-event-input input:focus::placeholder {
+  color: var(--primary-clr);
+}
+.add-event-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.add-event-footer .add-event-btn {
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  color: #fff;
+  background-color: var(--primary-clr);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid var(--primary-clr);
+}
+.add-event-footer .add-event-btn:hover {
+  background-color: transparent;
+  color: var(--primary-clr);
+}
+
+/* media queries */
+
+@media screen and (max-width: 1000px) {
+  body {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .container {
+    min-height: 100vh;
+    flex-direction: column;
+    border-radius: 0;
+  }
+  .container .left {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+  }
+  .container .right {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+  }
+  .calendar::before,
+  .calendar::after {
+    top: 100%;
+    left: 50%;
+    width: 97%;
+    height: 12px;
+    border-radius: 0 0 5px 5px;
+    transform: translateX(-50%);
+  }
+  .calendar::before {
+    width: 94%;
+    top: calc(100% + 12px);
+  }
+  .events {
+    padding-bottom: 340px;
+  }
+  .add-event-wrapper {
+    bottom: 100px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .calendar .month {
+    height: 75px;
+  }
+  .calendar .weekdays {
+    height: 50px;
+  }
+  .calendar .days .day {
+    height: 40px;
+    font-size: 0.8rem;
+  }
+  .calendar .days .day.active,
+  .calendar .days .day.today {
+    font-size: 1rem;
+  }
+  .right .today-date {
+    padding: 20px;
+  }
+}
+
+.credits {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 10px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #b38add;
+}
+.credits a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.credits a:hover {
+  text-decoration: underline;
 }

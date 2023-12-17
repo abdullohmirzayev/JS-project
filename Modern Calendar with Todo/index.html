@@ -2,34 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Stay organized with our user-friendly Calendar featuring events, reminders, and a customizable interface. Built with HTML, CSS, and JavaScript. Start scheduling today!"
+    />
+    <meta
+      name="keywords"
+      content="calendar, events, reminders, javascript, html, css, open source coding"
+    />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
-    <title>Calendar</title>
+    <title>Calendar with Events</title>
   </head>
   <body>
     <div class="container">
       <div class="left">
         <div class="calendar">
           <div class="month">
-            <i class="fa fa-angle-left prev"></i>
-            <div class="date"></div>
-            <i class="fa fa-angle-right next"></i>
+            <i class="fas fa-angle-left prev"></i>
+            <div class="date">december 2015</div>
+            <i class="fas fa-angle-right next"></i>
           </div>
           <div class="weekdays">
-            <div>sun</div>
-            <div>mon</div>
-            <div>tue</div>
-            <div>wen</div>
-            <div>thu</div>
-            <div>fri</div>
-            <div>sat</div>
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
           </div>
           <div class="days"></div>
           <div class="goto-today">
@@ -43,12 +52,10 @@
       </div>
       <div class="right">
         <div class="today-date">
-          <div class="event-day">Wed</div>
-          <div class="event-date">16 December 2023</div>
+          <div class="event-day">wed</div>
+          <div class="event-date">12th december 2022</div>
         </div>
-        <div class="events">
-          <!-- we will add events through js -->
-        </div>
+        <div class="events"></div>
         <div class="add-event-wrapper">
           <div class="add-event-header">
             <div class="title">Add Event</div>
@@ -62,13 +69,13 @@
               <input
                 type="text"
                 placeholder="Event Time From"
-                class="event-name-from"
+                class="event-time-from"
               />
             </div>
             <div class="add-event-input">
               <input
                 type="text"
-                placeholder="Event Time From"
+                placeholder="Event Time To"
                 class="event-time-to"
               />
             </div>
@@ -81,6 +88,13 @@
       <button class="add-event">
         <i class="fas fa-plus"></i>
       </button>
+    </div>
+
+    <div class="credits">
+      <p>
+        Crafted with ❤️ by
+        <a href="https://youtu.be/6EVgmpm4z5U" target="_blank">Open Source Coding</a>
+      </p>
     </div>
 
     <script src="script.js"></script>
