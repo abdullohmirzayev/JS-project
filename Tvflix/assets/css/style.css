@@ -154,6 +154,30 @@ body {
   #REUSED STYLE
 \*-----------------------------------*/
 
+.search-wrapper::before {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--white);
+  border-radius: var(--radius-24);
+  border-inline-end-color: transparent;
+  animation: loading 500ms linear infinite;
+}
+
+.search-wrapper.searching::before{display: block;}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
