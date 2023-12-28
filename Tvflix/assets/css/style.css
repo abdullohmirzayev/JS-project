@@ -167,7 +167,9 @@ body {
   animation: loading 500ms linear infinite;
 }
 
-.search-wrapper.searching::before{display: block;}
+.search-wrapper.searching::before {
+  display: block;
+}
 
 @keyframes loading {
   0% {
@@ -246,6 +248,41 @@ body {
 .search-wrapper {
   position: relative;
   flex-grow: 1;
+}
+
+.search-field {
+  border-color: var(--banner-background);
+  height: 48px;
+  line-height: 48px;
+  padding-inline: 44px 16px;
+  outline: none;
+  border-radius: var(--radius-8);
+  transition: var(--transition-short);
+}
+
+.search-field::placeholder {
+  color: var(--on-surface-variant);
+}
+
+.search-field:hover {
+  box-shadow: 0 0 0 2px var(--on-surface-variant);
+}
+
+.search-field:focus {
+  box-shadow: 0 0 0 2px var(--on-surface);
+}
+
+.search-wrapper .leading-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 12px;
+  opacity: 0.5;
+  transition: var(--transition-short);
+}
+
+.search-wrapper:focus-within .leading-icon{
+  opacity: 0;
 }
 
 /*-----------------------------------*\
